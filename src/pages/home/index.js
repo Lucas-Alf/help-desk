@@ -2,26 +2,31 @@ import React from "react";
 import Container from "@mui/material/Container";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Typography from "@mui/material/Typography";
 import ListItemText from "@mui/material/ListItemText";
 
 function Home() {
+  var articles = [
+    {
+      id: 1,
+      title: "Artigo 1",
+      subtitle: "Texto do artigo ....",
+    },
+    {
+      id: 2,
+      title: "Artigo 2",
+      subtitle: "Texto do artigo 2...",
+    },
+  ];
+
   return (
     <>
       <Container maxWidth="sm">
         <List>
-          <ListItem alignItems="flex-start">
-            <ListItemText
-              primary="Pegunta 1"
-              secondary={<>{"Texto da pergunta 1..."}</>}
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <ListItemText
-              primary="Pegunta "
-              secondary={<>{"Texto da pergunta 2..."}</>}
-            />
-          </ListItem>
+          {articles.map((x) => (
+            <ListItem key={x.id} alignItems="flex-start">
+              <ListItemText primary={x.title} secondary={x.subtitle} />
+            </ListItem>
+          ))}
         </List>
       </Container>
     </>

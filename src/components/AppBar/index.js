@@ -183,6 +183,9 @@ export default function PrimarySearchAppBar() {
             <StyledInputBase
               placeholder="Pesquisar…"
               inputProps={{ "aria-label": "search" }}
+              onChange={(evt) => {
+                console.log(evt.currentTarget.value);
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
