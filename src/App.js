@@ -11,7 +11,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar />
-      <div style={{ margin: 20 }}>{useRoutes(routes)}</div>
+      <div>{useRoutes(routes)}</div>
     </ThemeProvider>
   );
 }

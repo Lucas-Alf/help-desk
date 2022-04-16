@@ -1,7 +1,11 @@
 import { httpGet } from "../http-client";
 
-const getArticle = async (text) => {
+const getList = async (text) => {
   return await httpGet("/article", { text });
 };
 
-export { getArticle };
+const getById = async (id) => {
+  return await httpGet(`/article?id=${id}`);
+};
+
+export { getList, getById };
