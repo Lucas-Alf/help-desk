@@ -6,10 +6,13 @@ import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { useSearchParams } from "react-router-dom";
-import { getList } from "../../services/articles";
-import { withSnackbar } from "../../components/Snackbar";
+import { getArticleList } from "../../services/articles";
+import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
-function Home(props) {
+function Search() {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
   const [searchParams] = useSearchParams();
@@ -18,15 +21,15 @@ function Home(props) {
 
   const renderArticles = () => {
     setLoading(true);
-    getList(query)
+    getArticleList(query)
       .then((request) => {
-        if (request.status === 200) {
-          setArticles(request.data);
-        } else {
-          props.snackbarShowMessage(
-            `Ocorreu um erro ao buscar os artigos: ${request.status}`
-          );
-        }
+        setArticles(request.data);
+      })
+      .catch((error) => {
+        console.error(error);
+        enqueueSnackbar(`Ocorreu um erro ao buscar os artigos`, {
+          variant: "error",
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -43,11 +46,18 @@ function Home(props) {
       {loading ? (
         <LinearProgress />
       ) : (
-        <Container maxWidth="sm" style={{ marginTop: 20 }}>
+        <Container maxWidth="md" style={{ marginTop: 20 }}>
           {articles.length > 0 ? (
             <List>
               {articles.map((x) => (
-                <ListItem key={x.id} alignItems="flex-start">
+                <ListItem
+                  key={x.id}
+                  alignItems="flex-start"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate(`/view?id=${x.id}`);
+                  }}
+                >
                   <ListItemText
                     disableTypography
                     primary={
@@ -59,7 +69,9 @@ function Home(props) {
                       <div>
                         <div>
                           <div
-                            dangerouslySetInnerHTML={{ __html: x.headline }}
+                            dangerouslySetInnerHTML={{
+                              __html: `${x.headline}...`,
+                            }}
                           />
                         </div>
                         <div>
@@ -88,4 +100,4 @@ function Home(props) {
   );
 }
 
-export default withSnackbar(Home);
+export default Search;

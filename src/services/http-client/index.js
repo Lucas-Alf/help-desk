@@ -11,4 +11,12 @@ const httpGet = async (url, data, params = {}) => {
   });
 };
 
-export { httpGet };
+const httpPost = async (url, data) => {
+  return http.post(url, data);
+};
+
+const httpPut = async (url, data) => {
+  return http.put(url, data);
+};
+
+export { httpGet, httpPost, httpPut };

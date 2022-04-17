@@ -1,11 +1,19 @@
-import { httpGet } from "../http-client";
+import { httpGet, httpPost, httpPut } from "../http-client";
 
-const getList = async (text) => {
+const getArticleList = async (text) => {
   return await httpGet("/article", { text });
 };
 
-const getById = async (id) => {
-  return await httpGet(`/article?id=${id}`);
+const getArticle = async (id) => {
+  return await httpGet(`/article/${id}`);
 };
 
-export { getList, getById };
+const addArticle = async (obj) => {
+  return await httpPost("/article", obj);
+};
+
+const updateArticle = async (obj) => {
+  return await httpPut("/article", obj);
+};
+
+export { getArticleList, getArticle, addArticle, updateArticle };

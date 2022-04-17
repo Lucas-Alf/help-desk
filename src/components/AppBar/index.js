@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
+import { Add as AddIcon } from "@mui/icons-material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -99,6 +100,19 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
+          <Box>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="add"
+              onClick={() => {
+                navigate("/add");
+              }}
+              color="inherit"
+            >
+              <AddIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
