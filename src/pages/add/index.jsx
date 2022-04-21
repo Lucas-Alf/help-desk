@@ -39,7 +39,7 @@ function Add() {
   const saveForm = () => {
     setLoading(true);
     addArticle(formData)
-      .then((request) => {
+      .then(() => {
         enqueueSnackbar("Artigo adicionado com sucesso!", {
           variant: "success",
         });

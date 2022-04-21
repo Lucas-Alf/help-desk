@@ -30,7 +30,6 @@ function View() {
       .finally(() => {
         setLoading(false);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articleId]);
 
   return (

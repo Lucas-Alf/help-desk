@@ -1,3 +1,4 @@
+import React from "react";
 import Home from "./pages/home";
 import Search from "./pages/search";
 import Add from "./pages/add";
