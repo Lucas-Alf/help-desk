@@ -1,3 +1,10 @@
 .container {
   margin: 20px;
 }
+
+.centerDiv{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center
+}
