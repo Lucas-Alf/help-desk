@@ -22,7 +22,7 @@ function Add() {
     title: "",
     author: "",
     language: "",
-    content: "",
+    content: "# Titulo \nConteúdo do artigo...",
   });
 
   const handleChange = (event) => {
