@@ -41,7 +41,7 @@ function Update() {
   const saveForm = () => {
     setLoading(true);
     updateArticle(formData)
-      .then((request) => {
+      .then(() => {
         enqueueSnackbar("Artigo atualizado com sucesso!", {
           variant: "success",
         });
@@ -76,83 +76,82 @@ function Update() {
   }, [articleId]);
 
   return (<>
-      {loading && <LinearProgress />}
-      <Container maxWidth="md" style={{ marginTop: 50 }}>
-        <Stack
-          component="form"
-          sx={{ width: "100%" }}
-          spacing={2}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="title"
-            name="title"
-            label="Titulo do Artigo"
-            value={formData.title}
+    {loading && <LinearProgress />}
+    <Container maxWidth="md" style={{ marginTop: 50 }}>
+      <Stack
+        component="form"
+        sx={{ width: "100%" }}
+        spacing={2}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          id="title"
+          name="title"
+          label="Titulo do Artigo"
+          value={formData.title}
+          onChange={handleChange}
+          size="small"
+          disabled={loading}
+          required
+        />
+        <TextField
+          id="author"
+          name="author"
+          label="Autor"
+          value={formData.author}
+          onChange={handleChange}
+          size="small"
+          disabled={loading}
+          required
+        />
+        <FormControl fullWidth size="small" required disabled={loading}>
+          <InputLabel id="language-label">Idioma</InputLabel>
+          <Select
+            labelId="language-label"
+            id="language"
+            name="language"
+            label="Idioma"
+            value={formData.language}
             onChange={handleChange}
-            size="small"
-            disabled={loading}
-            required
-          />
-          <TextField
-            id="author"
-            name="author"
-            label="Autor"
-            value={formData.author}
-            onChange={handleChange}
-            size="small"
-            disabled={loading}
-            required
-          />
-          <FormControl fullWidth size="small" required disabled={loading}>
-            <InputLabel id="language-label">Idioma</InputLabel>
-            <Select
-              labelId="language-label"
-              id="language"
-              name="language"
-              label="Idioma"
-              value={formData.language}
-              onChange={handleChange}
-            >
-              <MenuItem value="portuguese">Português</MenuItem>
-              <MenuItem value="english">Inglês</MenuItem>
-              <MenuItem value="spanish">Espanhol</MenuItem>
-            </Select>
-          </FormControl>
-          <div data-color-mode="light">
-            <div className="wmde-markdown-var">
-              <MDEditor
-                id="content"
-                name="content"
-                value={formData.content}
-                onChange={handleMarkdown}
-                height={350}
-              />
-            </div>
+          >
+            <MenuItem value="portuguese">Português</MenuItem>
+            <MenuItem value="english">Inglês</MenuItem>
+            <MenuItem value="spanish">Espanhol</MenuItem>
+          </Select>
+        </FormControl>
+        <div data-color-mode="light">
+          <div className="wmde-markdown-var">
+            <MDEditor
+              id="content"
+              name="content"
+              value={formData.content}
+              onChange={handleMarkdown}
+              height={350}
+            />
           </div>
-        </Stack>
-        <Button
-          style={{ marginTop: 15, float: "right" }}
-          variant="contained"
-          onClick={() => {
-            debugger
-            saveForm();
-          }}
-        >
-          Salvar
-        </Button>
-        <Button
-          style={{ marginTop: 15, marginRight: 5, float: "right" }}
-          variant="text"
-          onClick={() => {
-            navigate("/home");
-          }}
-        >
-          Cancelar
-        </Button>
-      </Container>
-    </>
+        </div>
+      </Stack>
+      <Button
+        style={{ marginTop: 15, float: "right" }}
+        variant="contained"
+        onClick={() => {
+          saveForm();
+        }}
+      >
+        Salvar
+      </Button>
+      <Button
+        style={{ marginTop: 15, marginRight: 5, float: "right" }}
+        variant="text"
+        onClick={() => {
+          navigate("/home");
+        }}
+      >
+        Cancelar
+      </Button>
+    </Container>
+  </>
   );
 }
 
