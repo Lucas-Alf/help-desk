@@ -17,6 +17,8 @@ function Add() {
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
+  const themeMode = localStorage.getItem("theme") || "light";
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -102,7 +104,7 @@ function Add() {
               <MenuItem value="spanish">Espanhol</MenuItem>
             </Select>
           </FormControl>
-          <div data-color-mode="light">
+          <div data-color-mode={themeMode}>
             <div className="wmde-markdown-var">
               <MDEditor
                 id="content"

@@ -2,7 +2,7 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import routes from "./routes";
-import darkTheme from "./themes/dark";
+import defaultTheme from "./themes/default";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "./components/AppBar";
 import { SnackbarProvider } from "notistack";
@@ -11,7 +11,20 @@ import IconButton from "@mui/material/IconButton";
 import { Close as CloseIcon } from "@mui/icons-material";
 
 export default function App() {
-  const theme = createTheme(darkTheme);
+  const [mode, setMode] = React.useState(localStorage.getItem('theme') || 'light')
+
+  const toggleColorMode = () => {
+    const newMode = mode === 'light' ? 'dark' : 'light'
+    setMode(newMode);
+    localStorage.setItem('theme', newMode)
+  };
+
+  const theme = createTheme({
+    palette: {
+      ...defaultTheme.palette,
+      mode
+    }
+  })
 
   const notistackRef = React.createRef();
   const onClickDismiss = (key) => () => {
@@ -34,7 +47,10 @@ export default function App() {
         )}
       >
         <CssBaseline />
-        <AppBar />
+        <AppBar
+          mode={mode}
+          toggleColorMode={toggleColorMode}
+        />
         <div>{useRoutes(routes)}</div>
       </SnackbarProvider>
     </ThemeProvider>
