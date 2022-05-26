@@ -2,7 +2,8 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import routes from "./routes";
-import defaultTheme from "./themes/default";
+import lightTheme from "./themes/light";
+import darkTheme from "./themes/dark";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "./components/AppBar";
 import { SnackbarProvider } from "notistack";
@@ -19,12 +20,7 @@ export default function App() {
     localStorage.setItem('theme', newMode)
   };
 
-  const theme = createTheme({
-    palette: {
-      ...defaultTheme.palette,
-      mode
-    }
-  })
+  const theme = createTheme(mode === 'light' ? lightTheme : darkTheme)
 
   const notistackRef = React.createRef();
   const onClickDismiss = (key) => () => {

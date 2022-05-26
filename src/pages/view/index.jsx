@@ -5,7 +5,8 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
 import { getArticle } from "../../services/articles";
 import { useSnackbar } from "notistack";
-import MDEditor from "@uiw/react-md-editor";
+import MarkdownViewer from '../../components/Markdown/viewer.jsx';
+
 import Button from '@mui/material/Button';
 
 function View() {
@@ -14,7 +15,6 @@ function View() {
   const [article, setArticle] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
-  const themeMode = localStorage.getItem("theme") || "light";
   const articleId = searchParams.get("id");
   const navigate = useNavigate();
 
@@ -46,10 +46,8 @@ function View() {
           </Typography>
           <span>Por: {article.author} </span>
           <Button style={{ float: 'right', width: 20, height: 20 }} disableElevation variant="outlined" onClick={() => { navigate(`/update?id=${articleId}`); }}>Editar</Button>
-          <div data-color-mode={themeMode} style={{ marginTop: 20 }}>
-            <div className="wmde-markdown-var">
-              <MDEditor.Markdown source={article.content} />
-            </div>
+          <div style={{ marginTop: 20 }}>
+            <MarkdownViewer source={article.content} />
           </div>
         </Container>
       )}

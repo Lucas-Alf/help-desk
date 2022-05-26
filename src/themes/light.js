@@ -1,19 +1,19 @@
 // import blue from "@mui/material/colors/blue";
 
-const primary = "#3E5C76";
+const primary = "#466362";
 
 const theme = {
   palette: {
     mode: "light",
     primary: {
       main: primary,
-      light: "#4f83cc",
-      dark: "#002f6c",
+      light: "#72918f",
+      dark: "#1d3938",
     },
     secondary: {
-      main: "#5088b5",
-      light: "#748CAB",
-      dark: "#165b85",
+      main: "#87BBA2",
+      light: "#b8eed3",
+      dark: "#598b73",
     },
     typography: {
       allVariants: {

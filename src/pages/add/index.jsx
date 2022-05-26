@@ -8,16 +8,15 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
-import MDEditor from "@uiw/react-md-editor";
 import { useNavigate } from "react-router-dom";
 import { addArticle } from "../../services/articles";
 import { useSnackbar } from "notistack";
+import MarkdownEditor from '../../components/Markdown/editor.jsx';
 
 function Add() {
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
-  const themeMode = localStorage.getItem("theme") || "light";
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -61,7 +60,7 @@ function Add() {
   return (
     <>
       {loading && <LinearProgress />}
-      <Container maxWidth="md" style={{ marginTop: 50 }}>
+      <Container maxWidth="lg" style={{ marginTop: 50 }}>
         <Stack
           component="form"
           sx={{ width: "100%" }}
@@ -104,17 +103,13 @@ function Add() {
               <MenuItem value="spanish">Espanhol</MenuItem>
             </Select>
           </FormControl>
-          <div data-color-mode={themeMode}>
-            <div className="wmde-markdown-var">
-              <MDEditor
-                id="content"
-                name="content"
-                value={formData.content}
-                onChange={handleMarkdown}
-                height={350}
-              />
-            </div>
-          </div>
+          <MarkdownEditor
+            id="markdown-editor-add"
+            name="content"
+            value={formData.content}
+            onChange={handleMarkdown}
+            height={350}
+          />
         </Stack>
         <Button
           style={{ marginTop: 15, float: "right" }}
