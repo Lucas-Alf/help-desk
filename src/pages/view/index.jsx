@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
 import { getArticle } from "../../services/articles";
 import { useSnackbar } from "notistack";
 import MDEditor from "@uiw/react-md-editor";
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
 
 function View() {
   const [searchParams] = useSearchParams();
@@ -15,6 +14,7 @@ function View() {
   const [article, setArticle] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
+  const themeMode = localStorage.getItem("theme") || "light";
   const articleId = searchParams.get("id");
   const navigate = useNavigate();
 
@@ -45,8 +45,8 @@ function View() {
             {article.title}
           </Typography>
           <span>Por: {article.author} </span>
-          <Button style={{float: 'right', width: 20, height: 20}} disableElevation variant="outlined" onClick={() => {navigate(`/update?id=${articleId}`);}}>Editar</Button>
-          <div data-color-mode="light" style={{ marginTop: 20 }}>
+          <Button style={{ float: 'right', width: 20, height: 20 }} disableElevation variant="outlined" onClick={() => { navigate(`/update?id=${articleId}`); }}>Editar</Button>
+          <div data-color-mode={themeMode} style={{ marginTop: 20 }}>
             <div className="wmde-markdown-var">
               <MDEditor.Markdown source={article.content} />
             </div>
