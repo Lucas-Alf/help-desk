@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { updateArticle, getArticle } from "../../services/articles";
+import { updateArticle, getArticle } from "../../services/article";
 import { useSnackbar } from "notistack";
 import MarkdownEditor from '../../components/Markdown/editor.jsx';
 

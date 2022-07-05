@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { useSearchParams } from "react-router-dom";
-import { getArticleList } from "../../services/articles";
+import { getArticleList } from "../../services/article";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 

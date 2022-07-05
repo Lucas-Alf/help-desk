@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
-import { getArticle } from "../../services/articles";
+import { getArticle } from "../../services/article";
 import { useSnackbar } from "notistack";
 import MarkdownViewer from '../../components/Markdown/viewer.jsx';
 
