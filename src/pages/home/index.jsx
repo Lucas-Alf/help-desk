@@ -6,9 +6,11 @@ import { Card, Grid, CardContent, Skeleton } from "@mui/material";
 import styles from './styles.module.css'
 import { getCategoryList } from "../../services/category";
 import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
 
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
@@ -63,7 +65,15 @@ function Home() {
           : (
             <Grid container spacing={3} style={{ marginTop: 30 }}>
               {categoryList.map(x => (
-                <Grid key={x.id} onClick={ } item lg={4} sm={6} xs={12}>
+                <Grid
+                  style={{ cursor: "pointer" }}
+                  key={x.id}
+                  onClick={() => { navigate(`/search?categoryId=${x.id}`) }}
+                  item
+                  lg={4}
+                  sm={6}
+                  xs={12}
+                >
                   <Card sx={{ minWidth: 275 }}>
                     <CardContent>
                       <Typography variant="h5" color="primary" component="div">

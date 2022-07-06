@@ -5,11 +5,10 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { getArticleList, getArticleListByCategory } from "../../services/article";
 import { useSnackbar } from "notistack";
-import { useNavigate } from "react-router-dom";
-import { isNumber } from "lodash";
+import { get, isEmpty } from "lodash";
 
 function Search() {
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ function Search() {
   const renderArticles = () => {
     setLoading(true);
 
-    if (isNumber(categoryId)) {
+    if (!isEmpty(categoryId)) {
       getArticleListByCategory(categoryId)
         .then((request) => {
           setArticles(request.data);
@@ -85,13 +84,16 @@ function Search() {
                     }
                     secondary={
                       <div>
-                        <div>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: `${x.headline}...`,
-                            }}
-                          />
-                        </div>
+                        {!isEmpty(get(x, 'headline', ''))
+                          ? (
+                            <div>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: `${get(x, "headline")}...`,
+                                }}
+                              />
+                            </div>
+                          ) : <></>}
                         <div>
                           <Typography variant="body2">
                             Por: {x.author}
