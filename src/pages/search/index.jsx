@@ -6,9 +6,10 @@ import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { useSearchParams } from "react-router-dom";
-import { getArticleList } from "../../services/article";
+import { getArticleList, getArticleListByCategory } from "../../services/article";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
+import { isNumber } from "lodash";
 
 function Search() {
   const navigate = useNavigate();
@@ -18,22 +19,40 @@ function Search() {
   const [searchParams] = useSearchParams();
 
   const query = searchParams.get("query");
+  const categoryId = searchParams.get("categoryId");
 
   const renderArticles = () => {
     setLoading(true);
-    getArticleList(query)
-      .then((request) => {
-        setArticles(request.data);
-      })
-      .catch((error) => {
-        console.error(error);
-        enqueueSnackbar(`Ocorreu um erro ao buscar os artigos`, {
-          variant: "error",
+
+    if (isNumber(categoryId)) {
+      getArticleListByCategory(categoryId)
+        .then((request) => {
+          setArticles(request.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          enqueueSnackbar(`Ocorreu um erro ao buscar os artigos`, {
+            variant: "error",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    } else {
+      getArticleList(query)
+        .then((request) => {
+          setArticles(request.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          enqueueSnackbar(`Ocorreu um erro ao buscar os artigos`, {
+            variant: "error",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   useEffect(() => {

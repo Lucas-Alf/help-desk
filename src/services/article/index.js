@@ -4,6 +4,10 @@ const getArticleList = async (text) => {
   return httpGet("/article", { text });
 };
 
+const getArticleListByCategory = async (categoryId) => {
+  return httpGet("/article/category", { categoryId });
+};
+
 const getArticle = async (id) => {
   return httpGet(`/article/${id}`);
 };
@@ -16,4 +20,10 @@ const updateArticle = async (obj) => {
   return httpPut("/article", obj);
 };
 
-export { getArticleList, getArticle, addArticle, updateArticle };
+export {
+  getArticleList,
+  getArticleListByCategory,
+  getArticle,
+  addArticle,
+  updateArticle,
+};
