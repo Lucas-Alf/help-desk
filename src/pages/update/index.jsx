@@ -12,6 +12,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { updateArticle, getArticle } from "../../services/article";
 import { useSnackbar } from "notistack";
 import MarkdownEditor from '../../components/Markdown/editor.jsx';
+import { getCategoryList } from "../../services/category";
 
 function Update() {
   const [searchParams] = useSearchParams();
@@ -21,10 +22,12 @@ function Update() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
     author: '',
     language: '',
+    categoryId: '',
     content: '',
   });
 
@@ -61,19 +64,29 @@ function Update() {
 
   useEffect(() => {
     setLoading(true);
-    getArticle(articleId)
-      .then((request) => {
-        setFormData(request.data);
-      })
+
+    getCategoryList().then((request) => {
+      setCategories(request.data)
+      getArticle(articleId)
+        .then((request) => {
+          setFormData(request.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          enqueueSnackbar(`Ocorreu um erro ao buscar o artigo`, {
+            variant: "error",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    })
       .catch((error) => {
         console.error(error);
-        enqueueSnackbar(`Ocorreu um erro ao buscar o artigo`, {
+        enqueueSnackbar(`Ocorreu um erro ao adicionar o artigo`, {
           variant: "error",
         });
       })
-      .finally(() => {
-        setLoading(false);
-      });
   }, [articleId]);
 
   return (<>
@@ -96,6 +109,21 @@ function Update() {
           disabled={loading}
           required
         />
+        <FormControl fullWidth size="small" required disabled={loading}>
+          <InputLabel id="category-label">Categoria</InputLabel>
+          <Select
+            labelId="category-label"
+            id="categoryId"
+            name="categoryId"
+            label="Categoria"
+            value={formData.categoryId}
+            onChange={handleChange}
+          >
+            {categories.map((x) => (
+              <MenuItem key={x.id} value={x.id}>{x.description}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <TextField
           id="author"
           name="author"
