@@ -45,11 +45,15 @@ function Update() {
   const saveForm = () => {
     setLoading(true);
     updateArticle(formData)
-      .then(() => {
-        enqueueSnackbar("Artigo atualizado com sucesso!", {
-          variant: "success",
-        });
-        navigate("/home");
+      .then((request) => {
+        if (request.data.success === false) {
+          throw new Error(request.data.message);
+        } else {
+          enqueueSnackbar("Artigo atualizado com sucesso!", {
+            variant: "success",
+          });
+          navigate("/home");
+        }
       })
       .catch((error) => {
         console.error(error);

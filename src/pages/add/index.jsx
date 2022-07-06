@@ -61,11 +61,15 @@ function Add() {
   const saveForm = () => {
     setLoading(true);
     addArticle(formData)
-      .then(() => {
-        enqueueSnackbar("Artigo adicionado com sucesso!", {
-          variant: "success",
-        });
-        navigate("/home");
+      .then((request) => {
+        if (request.data.success === false) {
+          throw new Error(request.data.message);
+        } else {
+          enqueueSnackbar("Artigo adicionado com sucesso!", {
+            variant: "success",
+          });
+          navigate("/home");
+        }
       })
       .catch((error) => {
         console.error(error);
