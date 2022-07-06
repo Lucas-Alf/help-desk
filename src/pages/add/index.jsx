@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { addArticle } from "../../services/article";
 import { useSnackbar } from "notistack";
 import MarkdownEditor from '../../components/Markdown/editor.jsx';
+import { getCategoryList } from "../../services/category";
+
 
 function Add() {
   const navigate = useNavigate();
@@ -19,9 +21,28 @@ function Add() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    getCategoryList().then((request) => {
+      setCategories(request.data)
+    })
+      .catch((error) => {
+        console.error(error);
+        enqueueSnackbar(`Ocorreu um erro ao adicionar o artigo`, {
+          variant: "error",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [])
+
   const [formData, setFormData] = useState({
     title: "",
     author: "",
+    categoryId: null,
     language: "",
     content: "# Titulo \nConteúdo do artigo...",
   });
@@ -78,6 +99,21 @@ function Add() {
             disabled={loading}
             required
           />
+          <FormControl fullWidth size="small" required disabled={loading}>
+            <InputLabel id="category-label">Categoria</InputLabel>
+            <Select
+              labelId="category-label"
+              id="categoryId"
+              name="categoryId"
+              label="Categoria"
+              value={formData.categoryId}
+              onChange={handleChange}
+            >
+              {categories.map((x) => (
+                <MenuItem key={x.id} value={x.id}>{x.description}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             id="author"
             name="author"
