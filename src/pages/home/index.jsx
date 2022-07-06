@@ -63,7 +63,7 @@ function Home() {
           : (
             <Grid container spacing={3} style={{ marginTop: 30 }}>
               {categoryList.map(x => (
-                <Grid key={x.id} item lg={4} sm={6} xs={12}>
+                <Grid key={x.id} onClick={ } item lg={4} sm={6} xs={12}>
                   <Card sx={{ minWidth: 275 }}>
                     <CardContent>
                       <Typography variant="h5" color="primary" component="div">
